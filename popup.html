@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Zservdownloader Options</title>
+</head>
+<!---Include font Roboto-->
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<!---Include fontawesome-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
+
+<body>
+    
+    <div class="material-card bg-color-1 mb-20">
+    <h2>Configure External Url with token</h2>
+    <div id="alive"></div>
+    <input type="text" id="externalUrl" placeholder="Enter external url">
+    <button id="saveButton"><i class='fa fa-save'></i> Save</button>
+    </div>
+
+    <div class="material-card bg-color-3 mb-20">
+        <h2>Download urls</h2>
+        <textarea id="downloadUrls" placeholder="Enter download urls"></textarea>
+        <button id="downloadButton"><i class='fa fa-download'></i> Download</button>
+        </div>
+
+
+<div class="material-card bg-color-2 mb-20">
+  <h2>Files list <span id='total_size_info'></span></h2>
+
+  <button id="refreshButton">
+    <i class="fas fa-sync"></i> Refresh
+  </button>
+    <div id="filesList"></div>
+
+</div>
+
+  <script src="popup.js"></script>
+
+
+<style type="text/css">
+    /* Material design like */
+    body {
+      font-family: 'Roboto', sans-serif;
+      font-size: 14px;
+      line-height: 1.42857143;
+      color: #333;
+      background-color: #fff;
+      margin: 0;
+      padding: 0;
+      width:500px;
+      padding:20px;
+    }
+    h2 {
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.1;
+      color: inherit;
+      margin: 4px 0 10px;
+    }
+    #alive
+    {
+        font-size:11Px;
+    }
+    input {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 14px;
+      margin: 0;
+      padding: 6px 12px;
+      width: 100%;
+    }
+    textarea 
+    {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 14px;
+        margin: 0;
+        padding: 6px 12px;
+        width: 100%;
+        height: 100px;
+    }
+    button {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      color: #333;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.42857143;
+      margin: 0;
+      padding: 6px 12px;
+      text-align: center;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+    button:hover {
+      background-color: #e6e6e6;
+      border-color: #adadad;
+      color: #333;
+    }
+    button:active {
+      background-color: #e6e6e6;
+      border-color: #adadad;
+      color: #333;
+    }
+    button:focus {
+      outline: none;
+    }
+    button:active:focus {
+      outline: none;
+    }
+
+    .fileLink {
+  display: flex;
+  flex-direction: row; /* Les éléments sont disposés horizontalement */
+  justify-content: space-between; /* Pour aligner le texte à gauche et le bouton à droite */
+  align-items: flex-end; /* Pour aligner le texte en bas */
+  font-size:12px;
+}
+
+.fileLink button {
+  margin-left: 10px; /* Ajoute un espace entre le texte et le bouton */
+}
+
+    .material-card {
+  border-radius: 10px; /* Bords arrondis */
+  padding: 20px;
+  text-align: left;
+  font-size: 18px;
+}
+.mb-20 {
+  margin-bottom: 20px;
+}
+.btn-danger
+{
+    background-color:#FF0000;
+    color:white;
+    border:none;
+
+}
+.btn-xs
+{
+    font-size:10px;
+    padding:4px;
+    margin:4px;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  background-color: #333;
+}
+
+.bg-color-1 {
+  background-color: #303F9F; /* Couleur de fond 1 */
+  color: #FFFFFF; /* Couleur du texte correspondante */
+}
+
+.bg-color-2 {
+  background-color: #00796B; /* Couleur de fond 2 */
+  color: white; /* Couleur du texte correspondante */
+}
+.bg-color-2 a {
+  color: white; /* Couleur du texte correspondante */
+}
+.bg-color-3 {
+  background-color: #5733FF; /* Couleur de fond 3 */
+  color: #FFFFFF; /* Couleur du texte correspondante */
+}
+
+.bg-color-4 {
+  background-color: #FF33A8; /* Couleur de fond 4 */
+  color: #FFFFFF; /* Couleur du texte correspondante */
+}
+
+.bg-color-5 {
+  background-color: #A833FF; /* Couleur de fond 5 */
+  color: #FFFFFF; /* Couleur du texte correspondante */
+}
+
+.toaster {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+}
+
+.toast-content {
+  display: flex;
+  align-items: center;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  font-size: 16px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  margin-top: 5px;
+  position: relative;
+}
+
+.success {
+  background-color: #28a745;
+}
+
+.info {
+  background-color: #17a2b8;
+}
+
+.warning {
+  background-color: #ffc107;
+}
+
+.danger {
+  background-color: #dc3545;
+}
+
+.toast-content::before {
+  content: '';
+  width: 10px;
+  height: 100%;
+  background-color: inherit;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+
+
+</style>
+
+</body>
+</html>
