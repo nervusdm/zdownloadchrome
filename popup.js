@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const filesListDiv = document.getElementById('filesList'); 
   const refreshButton = document.getElementById('refreshButton');
   const total_size_infoDiv = document.getElementById('total_size_info');
+  const uploadButton  = document.getElementById('uploadButton');
   let urlServ='';
 
 
@@ -70,7 +71,7 @@ deleteFile = function(filename) {
             var urls = {urls: selectedText.split("\n")};
 
             console.log(urls);
-            fetch(urlWithText, {
+            fetch(urlWithText +"&action=urls", {
                 method: 'POST',
                 body: JSON.stringify(urls),
             }).then(function (response) {
@@ -94,6 +95,31 @@ deleteFile = function(filename) {
             deleteFile(e.target.dataset.file);
         }
     });
+
+  // Upload input type file (id files) to server
+  uploadButton.addEventListener('click', function () {
+    var formData = new FormData();
+    //look all files in input files
+    for(var i = 0; i < document.getElementById('files').files.length; i++) {
+      file = document.getElementById('files').files[i];
+      formData.append('file'+i, file);
+    }
+
+
+ 
+    fetch(urlServ + '&action=upload', {
+      method: 'POST',
+      body: formData
+    }).then(function (response) {
+      showToast("Upload started", "info");
+      listFiles();
+
+      return response.json();
+    }).then(function (data) {
+
+    });
+  });
+    
 
   refreshButton.addEventListener('click', function () {
     listFiles();

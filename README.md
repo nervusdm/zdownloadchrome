@@ -1,5 +1,9 @@
 # zdownloadchrome Chrome Extension
 
+![Screen 1](images/screen01.png)
+![Screen 2](images/screen02.png)
+
+
 ## Description
 zdownloadchrome is a Chrome extension that allows you to download selected text by right-clicking on it and sending it to a configurable external server.
 This extension require zdownloadserv installed on your server.
@@ -44,6 +48,9 @@ To use the zdownloadchrome extension:
 3. Choose "Download with ZDownloadChrome from the context menu.
 
 4. The extension will send the selected text to the configured zdownloadchrome server URL for processing.
+
+
+
 
 ## Disclaimer
 
