@@ -28,7 +28,9 @@ Before using the extension, you need to configure the external URL of your zdown
 1. Click on the zdownloadchrome extension icon in the Chrome toolbar.
 
 2. In the options page, enter the URL of your zdownloadchrome server in the input field labeled "Configurer l'URL externe."
-
+Example:
+http://localhost:26666/?token=MyPass%C2%B0!
+(replace the token by your token.)
 3. Click the "Save" button to save the URL.
 
 ## Usage
